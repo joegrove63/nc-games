@@ -7,15 +7,12 @@ const CommentAdder = ({ review_id, setComments }) => {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        // post request
         postComment(review_id, 'jessjelly', comment).then((postedComment) => {
           setComments((currComments) => {
             return [postedComment, ...currComments];
           });
           setComment('');
         });
-        //update reviews
-        //clear form
       }}
     >
       <input
@@ -26,6 +23,7 @@ const CommentAdder = ({ review_id, setComments }) => {
         onChange={(event) => {
           setComment(event.target.value);
         }}
+        required
       ></input>
       <button>Post</button>
     </form>

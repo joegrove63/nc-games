@@ -5,20 +5,23 @@ import * as api from '../utils/api';
 import Votes from './Votes';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import '@fontsource/roboto';
 
 const Reviews = ({ reviews, setReviews }) => {
   const [sortOrder, setSortOrder] = useState();
   const [sortBy, setSortBy] = useState();
   const params = useParams();
+  console.log(sortBy);
 
   const orderDropdownOptions = ['A-Z', 'Z-A'];
   const orderDefault = orderDropdownOptions[0];
   const sortByDropdownOptions = [
-    'Date/Time posted',
-    'Title',
-    'Popular',
-    'Most Commented',
-    'Reviewed By'
+    'Latest',
+    'Oldest',
+    'Top Voted',
+    'Lowest Voted',
+    'Most Comments',
+    'Least Comments'
   ];
   const sortBydefault = sortByDropdownOptions[0];
 
@@ -28,11 +31,15 @@ const Reviews = ({ reviews, setReviews }) => {
       .then((reviewsFromApi) => {
         setReviews(reviewsFromApi);
       });
-  }, [setReviews, params.category, sortOrder]);
+  }, [setReviews, params.category, sortOrder, sortBy]);
+
   return (
     <div>
       <h2>{params.category ? params.category : 'All Reviews'}</h2>
-      <Dropdown
+      {/* {if (sortBy !== undefined || sortBy !== 'comments' || sortBy !== 'votes'){
+        
+      }} */}
+      {/* <Dropdown
         options={orderDropdownOptions}
         value={orderDefault}
         placeholder="Order by"
@@ -40,22 +47,30 @@ const Reviews = ({ reviews, setReviews }) => {
           console.log(event);
           event.value === 'A-Z' ? setSortOrder('ASC') : setSortOrder('DESC');
         }}
-      />
+      /> */}
       <Dropdown
         options={sortByDropdownOptions}
         value={sortBydefault}
         placeholder="Sort by"
         onChange={(event) => {
-          if (event.value === 'Date/Time posted') {
-            setSortBy();
-          } else if (event.value === 'Title') {
-            setSortBy('title');
-          } else if (event.value === 'Popular') {
+          if (event.value === 'Latest') {
+            setSortOrder('DESC');
+            setSortBy('created_at');
+          } else if (event.value === 'Oldest') {
+            setSortOrder('ASC');
+            setSortBy('created_at');
+          } else if (event.value === 'Top Voted') {
+            setSortOrder('DESC');
             setSortBy('votes');
-          } else if (event.value === 'Most Commented') {
-            setSortBy('comments');
-          } else if (event.value === 'Reviewed By') {
-            setSortBy('owner');
+          } else if (EventTarget.value === 'Lowest Voted') {
+            setSortOrder('ASC');
+            setSortBy('votes');
+          } else if (event.value === 'Most Comments') {
+            setSortOrder('DESC');
+            setSortBy('comment_count');
+          } else if (event.value === 'Least Comments') {
+            setSortOrder('ASC');
+            setSortBy('comment_count');
           }
         }}
       />
@@ -76,7 +91,9 @@ const Reviews = ({ reviews, setReviews }) => {
                 <Link to={`/reviews/${review.review_id}`}>
                   <p>{review.comment_count} Comments</p>
                 </Link>
-              ) : null}
+              ) : (
+                <p>No Comments</p>
+              )}
             </li>
           );
         })}
