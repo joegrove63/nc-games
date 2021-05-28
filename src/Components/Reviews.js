@@ -7,7 +7,8 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 const Reviews = ({ reviews, setReviews }) => {
-  const [sortOrder, setSortOrder] = useState('DESC');
+  const [sortOrder, setSortOrder] = useState();
+  const [sortBy, setSortBy] = useState();
   const params = useParams();
 
   const orderDropdownOptions = ['A-Z', 'Z-A'];
@@ -15,30 +16,50 @@ const Reviews = ({ reviews, setReviews }) => {
   const sortByDropdownOptions = [
     'Date/Time posted',
     'Title',
-    'Votes',
-    'Comments',
-    'User'
+    'Popular',
+    'Most Commented',
+    'Reviewed By'
   ];
   const sortBydefault = sortByDropdownOptions[0];
 
   useEffect(() => {
-    api.fetchReviews(params.category, { sortOrder }).then((reviewsFromApi) => {
-      setReviews(reviewsFromApi);
-    });
+    api
+      .fetchReviews(params.category, { sortBy, sortOrder })
+      .then((reviewsFromApi) => {
+        setReviews(reviewsFromApi);
+      });
   }, [setReviews, params.category, sortOrder]);
   return (
     <div>
       <h2>{params.category ? params.category : 'All Reviews'}</h2>
       <Dropdown
         options={orderDropdownOptions}
+        value={orderDefault}
+        placeholder="Order by"
         onChange={(event) => {
           console.log(event);
           event.value === 'A-Z' ? setSortOrder('ASC') : setSortOrder('DESC');
         }}
-        value={orderDefault}
-        placeholder="Order by"
       />
-      ;
+      <Dropdown
+        options={sortByDropdownOptions}
+        value={sortBydefault}
+        placeholder="Sort by"
+        onChange={(event) => {
+          if (event.value === 'Date/Time posted') {
+            setSortBy();
+          } else if (event.value === 'Title') {
+            setSortBy('title');
+          } else if (event.value === 'Popular') {
+            setSortBy('votes');
+          } else if (event.value === 'Most Commented') {
+            setSortBy('comments');
+          } else if (event.value === 'Reviewed By') {
+            setSortBy('owner');
+          }
+        }}
+      />
+
       <ul>
         {reviews.map((review) => {
           return (

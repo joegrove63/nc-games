@@ -10,13 +10,14 @@ export const fetchAllCategories = () => {
     .then((response) => response.data.categories);
 };
 
-export const fetchReviews = (category, { sortOrder }) => {
+export const fetchReviews = (category, { sortBy, sortOrder }) => {
   // let path = '/reviews';
   // if (category) path += `?category=${category}`;
   return reviewsApi
     .get('/reviews', {
       params: {
         category: category,
+        sort_by: sortBy,
         order: sortOrder
       }
     })
