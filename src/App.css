@@ -9,16 +9,13 @@
   padding: 7em 10em 5em 10em;
 }
 
-.heading {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  font-weight: 200;
-}
-
 .headingTitle {
   color: #f1bb22;
   margin: 0 0 0.3em 0;
   float: left;
+  padding-top: 0.2em;
+  padding-bottom: 0.5em;
+  font-weight: 200;
 }
 
 .headerAndNavBar {
@@ -26,13 +23,15 @@
   padding: 0 10em 0 10em;
   position: fixed;
   top: 0;
-  width: 80%;
-  /* margin-top: -20px; */
+  width: calc(100% - 320px);
 }
 
 .navBar {
   clear: left;
   padding-bottom: 2em;
+  padding-right: 10em;
+  width: 100%;
+  /* position: fixed; */
 }
 
 .navLinks {
