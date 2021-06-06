@@ -11,13 +11,21 @@ const Nav = () => {
     });
   }, []);
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/reviews">All Reviews</Link>
+    <nav className="navBar">
+      {/* <Link to="/" className="navLinks">
+        Home
+      </Link> */}
+      <Link to="/" className="navLinks">
+        All Reviews
+      </Link>
       {categories.map((category) => {
         return (
-          <Link key={category.slug} to={`/categories/${category.slug}`}>
-            {category.slug}
+          <Link
+            key={category.slug}
+            to={`/categories/${category.slug}`}
+            className="navLinks"
+          >
+            {category.slug.charAt(0).toUpperCase() + category.slug.slice(1)}
           </Link>
         );
       })}

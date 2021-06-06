@@ -3,38 +3,56 @@ import { useParams } from 'react-router-dom';
 import { fetchSingleReview } from '../utils/api';
 import Votes from './Votes';
 import Comments from '../Components/Comments';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+dayjs.extend(relativeTime);
 
-const SingleReview = ({ votesUpdate, setVotesUpdate }) => {
+const SingleReview = () => {
   const [review, setReview] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
 
   useEffect(() => {
-    fetchSingleReview(params.review_id).then((reviewFromApi) => {
-      setIsLoading(false);
-      setReview(reviewFromApi);
-    });
-  }, [params.review_id, setIsLoading]);
+    fetchSingleReview(params.review_id)
+      .then((reviewFromApi) => {
+        setReview(reviewFromApi);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response.data);
+      });
+  }, [params.review_id]);
   console.log(review.review_id);
+
+  const date = dayjs().to(dayjs(review.created_at));
+
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
   return (
-    <div>
+    <div className="content">
+      <Card style={{ backgroundColor: '#284444' }} className="singleReviewCard">
+        <CardContent>
+          <section className="votes">
+            <Votes votes={review.votes} review_id={review.review_id} />
+          </section>
+          <article className="singleReviewInfo">
+            <h2>{review.title}</h2>
+            <p>{review.review_body}</p>
+            <p>
+              Posted by {review.owner} {date}
+            </p>
+          </article>
+        </CardContent>
+      </Card>
       <section>
-        <h2>{review.title}</h2>
-        <p>{review.review_body}</p>
-        {!isLoading && (
-          <p>
-            Posted by {review.owner} on {review.created_at}
-          </p>
-        )}
-        {!isLoading && <p>{review.comment_count} Comments</p>}
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <Votes votes={review.votes} review_id={review.review_id} />
-        )}
-      </section>
-      <section>
-        <Comments review_id={params.review_id} />
+        <Comments
+          review_id={params.review_id}
+          comment_count={review.comment_count}
+        />
       </section>
     </div>
   );

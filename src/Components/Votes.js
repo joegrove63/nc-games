@@ -1,11 +1,10 @@
 import React from 'react';
-// import Reviews from './Reviews';
 import { patchVotes } from '../utils/api';
 import { useState } from 'react';
 
 const Vote = ({ votes, review_id }) => {
   const [votesChange, setVotesChange] = useState(0);
-
+  console.log(votes);
   const upVote = () => {
     setVotesChange((currVotes) => currVotes + 1);
     patchVotes(review_id, 1).catch(() => {
