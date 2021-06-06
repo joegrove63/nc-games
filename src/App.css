@@ -11,10 +11,10 @@
 
 .headingTitle {
   color: #f1bb22;
-  margin: 0 0 0.3em 0;
   float: left;
-  padding-top: 0.2em;
-  padding-bottom: 0.5em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  margin: 0;
   font-weight: 200;
 }
 
@@ -31,7 +31,6 @@
   padding-bottom: 2em;
   padding-right: 10em;
   width: 100%;
-  /* position: fixed; */
 }
 
 .navLinks {
