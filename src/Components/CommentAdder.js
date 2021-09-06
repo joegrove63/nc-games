@@ -8,7 +8,6 @@ const CommentAdder = ({ review_id, setComments }) => {
       onSubmit={(event) => {
         event.preventDefault();
         postComment(review_id, 'jessjelly', comment).then((postedComment) => {
-          console.log(postedComment);
           setComments((currComments) => {
             return [postedComment, ...currComments];
           });

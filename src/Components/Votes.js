@@ -4,15 +4,11 @@ import { useState } from 'react';
 
 const Vote = ({ votes, review_id }) => {
   const [votesChange, setVotesChange] = useState(0);
-  console.log(votes);
   const upVote = () => {
     setVotesChange((currVotes) => currVotes + 1);
     patchVotes(review_id, 1).catch(() => {
       setVotesChange(0);
     });
-    //PATCH user
-    //UPDATE THE STARS SOMEWHERE IN STATE
-    //CATCH -> handle error
   };
   const downVote = () => {
     if (votes + votesChange > 0) {

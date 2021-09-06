@@ -25,7 +25,6 @@ const SingleReview = () => {
         console.log(err.response.data);
       });
   }, [params.review_id]);
-  console.log(review.review_id);
 
   const date = dayjs().to(dayjs(review.created_at));
 

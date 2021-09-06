@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const reviewsApi = axios.create({
-  baseURL: 'https://joes-games.herokuapp.com/api'
+  baseURL: 'https://joes-games.herokuapp.com/api',
 });
 
 export const fetchAllCategories = () => {
@@ -11,15 +11,13 @@ export const fetchAllCategories = () => {
 };
 
 export const fetchReviews = (category, { sortBy, sortOrder }) => {
-  // let path = '/reviews';
-  // if (category) path += `?category=${category}`;
   return reviewsApi
     .get('/reviews', {
       params: {
         category: category,
         sort_by: sortBy,
-        order: sortOrder
-      }
+        order: sortOrder,
+      },
     })
     .then((response) => response.data.reviews);
 };
@@ -32,13 +30,7 @@ export const fetchSingleReview = (review_id) => {
 
 export const patchVotes = (review_id, increment) => {
   return reviewsApi.patch(`/reviews/${review_id}`, { inc_votes: increment });
-
-  // .then((response) => console.log(response.data));
 };
-
-// export const patchCommentVotes = (id, increment) => {
-//   return reviewsApi.patch(`/reviews/$`)
-// };
 
 export const fetchCommentsById = (review_id) => {
   return reviewsApi.get(`/reviews/${review_id}/comments`).then((response) => {
@@ -50,7 +42,6 @@ export const postComment = (review_id, username, body) => {
   return reviewsApi
     .post(`/reviews/${review_id}/comments`, { username, body })
     .then((response) => {
-      console.log(response);
       return response.data.postedComment;
     });
 };

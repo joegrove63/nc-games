@@ -12,9 +12,6 @@ const Nav = () => {
   }, []);
   return (
     <nav className="navBar">
-      {/* <Link to="/" className="navLinks">
-        Home
-      </Link> */}
       <Link to="/" className="navLinks">
         All Reviews
       </Link>
