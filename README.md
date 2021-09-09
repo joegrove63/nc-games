@@ -12,4 +12,4 @@ To run project locally:
 
 3. cd to the cloned file
 
-4. To open the project run: code
+4. To open the project run: code .
