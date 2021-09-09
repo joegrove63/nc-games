@@ -8,7 +8,7 @@ To run project locally:
 
 1. navigate to directory of your choice to clone this project
 
-2. run: git clone https://github.com/joegrove63/nc-games.git
+2. run: git clone https://github.com/joegrove63/fe-nc-games.git
 
 3. cd to the cloned file
 
